@@ -27,6 +27,10 @@ use Sabre\VObject\Component\VCalendar;
  * @method bool getNotified()
  * @method ?DateTime getDone()
  * @method void setDone(?DateTime $done)
+ * @method ?DateTime getDuedate()
+ * @method void setDuedate(?DateTime $duedate)
+ * @method ?DateTime getStartdate()
+ * @method void setStartdate(?DateTime $startdate)
  *
  * @method void setLabels(Label[] $labels)
  * @method null|Label[] getLabels()
@@ -75,6 +79,7 @@ class Card extends RelationalEntity {
 	protected $archived = false;
 	protected $done = null;
 	protected $duedate;
+	protected $startdate;
 	protected $notified = false;
 	protected $deletedAt = 0;
 	protected $commentsUnread = 0;
@@ -101,6 +106,7 @@ class Card extends RelationalEntity {
 		$this->addType('notified', 'boolean');
 		$this->addType('deletedAt', 'integer');
 		$this->addType('duedate', 'datetime');
+		$this->addType('startdate', 'datetime');
 		$this->addRelation('labels');
 		$this->addRelation('assignedUsers');
 		$this->addRelation('attachments');
@@ -122,12 +128,21 @@ class Card extends RelationalEntity {
 		$calendar = new VCalendar();
 		$event = $calendar->createComponent('VTODO');
 		$event->UID = 'deck-card-' . $this->getId();
+		
+		$creationDate = new DateTime();
+		$creationDate->setTimestamp($this->createdAt);
+		$event->DTSTAMP = $creationDate;
+		
+		// Add start date if available
+		if ($this->getStartdate()) {
+			$event->DTSTART = new DateTime($this->getStartdate()->format('c'), new DateTimeZone('UTC'));
+		}
+		
+		// Add due date if available
 		if ($this->getDuedate()) {
-			$creationDate = new DateTime();
-			$creationDate->setTimestamp($this->createdAt);
-			$event->DTSTAMP = $creationDate;
 			$event->DUE = new DateTime($this->getDuedate()->format('c'), new DateTimeZone('UTC'));
 		}
+		
 		$event->add('RELATED-TO', 'deck-stack-' . $this->getStackId());
 
 		// FIXME: For write support: CANCELLED / IN-PROCESS handling

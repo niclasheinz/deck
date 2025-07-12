@@ -72,6 +72,7 @@ class ActivityManager {
 	public const SUBJECT_CARD_UPDATE_TITLE = 'card_update_title';
 	public const SUBJECT_CARD_UPDATE_DESCRIPTION = 'card_update_description';
 	public const SUBJECT_CARD_UPDATE_DUEDATE = 'card_update_duedate';
+	public const SUBJECT_CARD_UPDATE_STARTDATE = 'card_update_startdate';
 	public const SUBJECT_CARD_UPDATE_ARCHIVE = 'card_update_archive';
 	public const SUBJECT_CARD_UPDATE_UNARCHIVE = 'card_update_unarchive';
 	public const SUBJECT_CARD_UPDATE_DONE = 'card_update_done';
@@ -353,6 +354,7 @@ class ActivityManager {
 			case self::SUBJECT_CARD_UPDATE_TITLE:
 			case self::SUBJECT_CARD_UPDATE_DESCRIPTION:
 			case self::SUBJECT_CARD_UPDATE_DUEDATE:
+			case self::SUBJECT_CARD_UPDATE_STARTDATE:
 			case self::SUBJECT_CARD_UPDATE_STACKID:
 			case self::SUBJECT_LABEL_ASSIGN:
 			case self::SUBJECT_LABEL_UNASSING:

@@ -22,7 +22,9 @@
 			:can-edit="canEdit"
 			@change="updateCardDue"
 			@input="debouncedUpdateCardDue" />
-
+		<StartDateSelector :card="card"
+			:can-edit="canEdit"
+			@change="updateCardStart" />
 		<div v-if="projectsEnabled" class="section-wrapper">
 			<NcCollectionList v-if="card.id"
 				:id="`${card.id}`"
@@ -52,6 +54,7 @@ import Description from './Description.vue'
 import TagSelector from './TagSelector.vue'
 import AssignmentSelector from './AssignmentSelector.vue'
 import DueDateSelector from './DueDateSelector.vue'
+import StartDateSelector from './StartDateSelector.vue'
 import { debounce } from 'lodash'
 
 export default {
@@ -62,6 +65,7 @@ export default {
 		TagSelector,
 		Description,
 		NcCollectionList,
+		StartDateSelector,
 	},
 	mixins: [Color],
 	props: {
@@ -189,6 +193,12 @@ export default {
 		},
 		parse(value) {
 			return moment(value).toDate()
+		},
+		updateCardStart(changeEvent) {
+			this.$store.dispatch('updateCardStart', {
+				...this.copiedCard,
+				startdate: changeEvent.value ? (new Date(changeEvent.value)).toISOString() : null,
+			})
 		},
 	},
 }

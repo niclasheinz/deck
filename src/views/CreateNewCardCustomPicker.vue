@@ -73,6 +73,10 @@
 				@change="updateCardDue"
 				@input="updateCardDue" />
 
+			 <StartDateSelector :card="card"
+				:can-edit="!loading && !!selectedBoard"
+				@change="updateCardStart" />
+
 			<Description :key="card.id"
 				:card="card"
 				@change="descriptionChanged" />
@@ -132,6 +136,7 @@ import AssignmentSelector from '../components/card/AssignmentSelector.vue'
 import TagSelector from '../components/card/TagSelector.vue'
 import { BoardApi } from '../services/BoardApi.js'
 import DueDateSelector from '../components/card/DueDateSelector.vue'
+import StartDateSelector from '../components/card/StartDateSelector.vue'
 import Description from '../components/card/Description.vue'
 import CardPlusOutline from 'vue-material-design-icons/CardPlusOutline.vue'
 import FormatColumnsIcon from 'vue-material-design-icons/FormatColumns.vue'
@@ -149,6 +154,7 @@ export default {
 		CardPlusOutline,
 		Description,
 		DueDateSelector,
+		StartDateSelector,
 		TagSelector,
 		AssignmentSelector,
 		NcButton,
@@ -298,6 +304,9 @@ export default {
 		},
 		updateCardDue(newValue) {
 			this.card.duedate = newValue
+		},
+		updateCardStart(changeEvent) {
+			this.card.startdate = changeEvent.value
 		},
 		descriptionChanged(newValue) {
 			this.card.description = newValue

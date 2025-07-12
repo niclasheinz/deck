@@ -359,6 +359,10 @@ export default {
 			const updatedCard = await apiClient.updateCard(card)
 			commit('updateCardProperty', { property: 'duedate', card: updatedCard })
 		},
+		async updateCardStart({ commit }, card) {
+			const updatedCard = await apiClient.updateCard(card)
+			commit('updateCardProperty', { property: 'startdate', card: updatedCard })
+		},
 
 		addCardData({ commit }, cardData) {
 			const card = { ...cardData }
