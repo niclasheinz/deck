@@ -54,7 +54,7 @@ import Description from './Description.vue'
 import TagSelector from './TagSelector.vue'
 import AssignmentSelector from './AssignmentSelector.vue'
 import DueDateSelector from './DueDateSelector.vue'
-import StartDateSelector from './StartDateSelector.vue'
+import StartDateSelector from './StartEndDateSelector.vue'
 import { debounce } from 'lodash'
 
 export default {
