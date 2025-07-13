@@ -3,16 +3,19 @@
   - SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 <template>
-	<CardDetailEntry :label="t('deck', 'Assign a due date to this card…')" data-test="due-date-selector">
+	<CardDetailEntry :label="t('deck', 'Assign a due date to this card…')" data-test="due-date-selector" class="due-date-selector">
 		<Calendar v-if="!card.done" slot="icon" :size="20" />
 		<CalendarCheck v-else slot="icon" :size="20" />
 		<template v-if="!card.done && !card.archived">
-			<NcDateTimePickerNative v-if="duedate"
-				id="card-duedate-picker"
-				v-model="duedate"
-				:placeholder="t('deck', 'Set a due date')"
-				:hide-label="true"
-				type="datetime-local" />
+			<div class="date-input-wrapper">
+				<label for="card-duedate-picker">{{ t('deck', 'Due date') }}</label>
+				<NcDateTimePickerNative 
+					id="card-duedate-picker"
+					v-model="duedate"
+					:placeholder="t('deck', 'Set a due date')"
+					:hide-label="true"
+					type="datetime-local" />
+			</div>
 			<NcActions v-if="canEdit"
 				:menu-title="!duedate ? t('deck', 'Add due date') : null"
 				type="tertiary"
@@ -76,11 +79,13 @@
 						<ClearIcon :size="20" />
 					</template>
 				</NcButton>
-				<NcButton type="secondary" @click="archiveUnarchiveCard()">
+				<NcButton v-if="!card.archived"
+					type="tertiary"
+					:name="card.archived ? t('deck', 'Unarchive card') : t('deck', 'Archive card')"
+					@click="archiveUnarchiveCard()">
 					<template #icon>
 						<ArchiveIcon :size="20" />
 					</template>
-					{{ card.archived ? t('deck', 'Unarchive card') : t('deck', 'Archive card') }}
 				</NcButton>
 			</div>
 		</template>
@@ -240,6 +245,23 @@ export default defineComponent({
 })
 </script>
 <style scoped lang="scss">
+.due-date-selector {
+	flex: 1;
+}
+
+.date-input-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	width: 100%;
+}
+
+.date-input-wrapper label {
+	font-weight: 500;
+	color: var(--color-text-maxcontrast);
+	font-size: 13px;
+}
+
 .done-info {
 	flex-grow: 1;
 }

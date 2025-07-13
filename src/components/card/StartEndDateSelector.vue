@@ -3,7 +3,7 @@
   - SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 <template>
-	<CardDetailEntry :label="t('deck', 'Set start date for this card…')" data-test="start-date-selector">
+	<CardDetailEntry :label="t('deck', 'Set start date for this card…')" data-test="start-date-selector" class="start-date-selector">
 		<CalendarStart slot="icon" :size="20" />
 		<template v-if="!card.done && !card.archived">
 			<div class="date-input-wrapper">
@@ -139,6 +139,10 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+.start-date-selector {
+	flex: 1;
+}
+
 .date-input-wrapper {
 	display: flex;
 	flex-direction: column;
