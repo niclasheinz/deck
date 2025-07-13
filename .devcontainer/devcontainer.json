@@ -1,6 +1,7 @@
 {
     "image": "ghcr.io/juliusknorr/nextcloud-dev-php81:latest",
     "forwardPorts": [80],
+    "remoteUser": "root",
     "containerEnv": {
         "NEXTCLOUD_AUTOINSTALL_APPS": "deck",
 		"XDEBUG_MODE": "debug"
